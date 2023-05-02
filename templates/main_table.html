@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rome II Building Planner</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'r2_gc_planner/img/favicon.png' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'r2_gc_planner/css/r2_styles.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'r2_gc_planner/js/script.js' %}"></script>
+  <script>
+    var imageSources = {
+      incomePositive: "{% static 'r2_gc_planner/img/ui-images/wealth_positive.png' %}",
+      incomeNegative: "{% static 'r2_gc_planner/img/ui-images/wealth_negative.png' %}",
+      orderPositive: "{% static 'r2_gc_planner/img/ui-images/public_order_positive.png' %}",
+      orderNeutral: "{% static 'r2_gc_planner/img/ui-images/public_order_neutral.png' %}",
+      orderNegative: "{% static 'r2_gc_planner/img/ui-images/public_order_negative.png' %}",
+      foodPositive: "{% static 'r2_gc_planner/img/ui-images/food_positive.png' %}",
+      foodNegative: "{% static 'r2_gc_planner/img/ui-images/food_negative.png' %}",
+      defaultBuildingImage: "{% static 'r2_gc_planner/img/building_logos/slum_default.png' %}",
+    };
+  </script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <div class="header">
+          <h5>Rome II </br> Building Planner</h5>
+        </div>
+      </div>
+      <div class="col">
+        <form>
+          <div class="row g-3">
+            <div class="col">
+              <select class="form-select form-select-sm" id="id_faction">
+                <option value="none" selected disabled hidden>Select Your Faction</option>
+                {% for faction in factions %}
+                <option value="{{ faction.id }}">{{ faction.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-select form-select-sm" id="id_province">
+                <option value="none" selected disabled hidden>Select Province</option>
+                {% for province in provinces %}
+                <option value="{{ province.id }}">{{ province.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-outline-light btn-sm" onclick="updateCitiesAndCreateTable()">Add
+                Province</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col">
+        <div class="all-tables-total">
+          <div class="total-div total-food">
+            <img class="ui-image total-food" src="{% static 'r2_gc_planner/img/ui-images/food_negative.png' %}"
+              alt="food" title="Food">
+            <span class="total total-food">0</span>
+          </div>
+          <div class="total-div total-order">
+            <img class="ui-image total-order" src="{% static 'r2_gc_planner/img/ui-images/public_order_neutral.png' %}"
+              alt="public order" title="Public Order">
+            <span class="total total-order">0</span>
+          </div>
+          <div class="total-div total-income">
+            <img class="ui-image total-income" src="{% static 'r2_gc_planner/img/ui-images/wealth_negative.png' %}"
+              alt="wealth" title="Income per turn">
+            <span class="total total-income">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="table-container">
+  </div>
+</body>

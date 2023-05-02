@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+img/
+css/
+.vscode/
+r2tw/
+settings.py
+db.sqlite3
